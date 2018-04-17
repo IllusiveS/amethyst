@@ -6,5 +6,5 @@ use amethyst_core::specs::{Component, NullStorage};
 pub struct FlyControlTag;
 
 impl Component for FlyControlTag {
-    type Storage = NullStorage<FlyControlTag>;
+	type Storage = NullStorage<FlyControlTag>;
 }

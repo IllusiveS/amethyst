@@ -5,7 +5,7 @@ extern crate amethyst;
 use amethyst::{Application, Error, State, Trans};
 use amethyst::assets::Loader;
 use amethyst::config::Config;
-use amethyst::controls::{FlyControlBundle, FlyControlTag};
+use amethyst::controls::{bundles::fly_control_bundle::FlyControlBundle, components::fly_control_tag::FlyControlTag};
 use amethyst::core::cgmath::{Deg, Vector3};
 use amethyst::core::frame_limiter::FrameRateLimitStrategy;
 use amethyst::core::transform::{GlobalTransform, Transform, TransformBundle};

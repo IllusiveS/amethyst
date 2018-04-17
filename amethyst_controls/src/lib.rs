@@ -10,10 +10,6 @@ extern crate winit;
 #[cfg(feature = "profiler")]
 extern crate thread_profiler;
 
-mod components;
-mod bundles;
-mod systems;
-
-pub use self::bundles::FlyControlBundle;
-pub use self::components::FlyControlTag;
-pub use self::systems::{FlyMovementSystem, FreeRotationSystem, MouseCenterLockSystem};
+pub mod components;
+pub mod bundles;
+pub mod systems;
