@@ -1,11 +1,11 @@
 //! Demonstrates how to use the fly camera
 
 extern crate amethyst;
+extern crate amethyst_controls;
 
 use amethyst::{Application, Error, State, Trans};
 use amethyst::assets::Loader;
 use amethyst::config::Config;
-use amethyst::controls::{bundles::fly_control_bundle::FlyControlBundle, components::fly_control_tag::FlyControlTag};
 use amethyst::core::cgmath::{Deg, Vector3};
 use amethyst::core::frame_limiter::FrameRateLimitStrategy;
 use amethyst::core::transform::{GlobalTransform, Transform, TransformBundle};
@@ -15,6 +15,9 @@ use amethyst::renderer::{AmbientColor, Camera, DisplayConfig, DrawShaded, Elemen
                          KeyboardInput, Material, MaterialDefaults, MeshHandle, ObjFormat,
                          Pipeline, PosNormTex, Projection, RenderBundle, Rgba, Stage,
                          VirtualKeyCode, WindowEvent};
+
+use amethyst_controls::components::arc_camera_component::ArcCameraComponent;
+use amethyst_controls::bundles::arc_ball_camera_bundle::ArcBallCameraBundle;
 
 struct ExampleState;
 
@@ -114,12 +117,12 @@ fn run() -> Result<(), Error> {
     );
     let mut game = Application::build(resources_directory, ExampleState)?
         .with_frame_limit(FrameRateLimitStrategy::Unlimited, 0)
-        .with_bundle(FlyControlBundle::<String, String>::new(
+        .with_bundle(ArcBallCameraBundle::<String, String>::new(
             Some(String::from("move_x")),
             Some(String::from("move_y")),
             Some(String::from("move_z")),
         ))?
-        .with_bundle(TransformBundle::new().with_dep(&["fly_movement"]))?
+        .with_bundle(TransformBundle::new().with_dep(&[]))?
         .with_bundle(
             InputBundle::<String, String>::new().with_bindings_from_file(&key_bindings_path),
         )?
@@ -137,6 +140,6 @@ fn initialise_camera(world: &mut World) {
         .with(Camera::from(Projection::perspective(1.3, Deg(60.0))))
         .with(local)
         .with(GlobalTransform::default())
-        .with(FlyControlTag)
+        .with(ArcCameraComponent::default())
         .build();
 }

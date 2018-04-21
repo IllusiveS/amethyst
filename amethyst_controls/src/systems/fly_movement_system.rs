@@ -6,7 +6,7 @@ use amethyst_input::InputHandler;
 use std::hash::Hash;
 use std::marker::PhantomData;
 
-use components::fly_control_tag::FlyControlTag;
+use components::arc_camera_component::ArcCameraComponent;
 
 /// The system that manages the fly movement.
 /// Generic parameters are the parameters for the InputHandler.
@@ -58,17 +58,17 @@ impl<'a, A, B> System<'a> for FlyMovementSystem<A, B>
 		Fetch<'a, Time>,
 		WriteStorage<'a, Transform>,
 		Fetch<'a, InputHandler<A, B>>,
-		ReadStorage<'a, FlyControlTag>,
+		ReadStorage<'a, ArcCameraComponent>,
 	);
 
-	fn run(&mut self, (time, mut transform, input, tag): Self::SystemData) {
+	fn run(&mut self, (time, mut transform, input, arc_cam): Self::SystemData) {
 		let x = FlyMovementSystem::get_axis(&self.right_input_axis, &input);
 		let y = FlyMovementSystem::get_axis(&self.up_input_axis, &input);
 		let z = FlyMovementSystem::get_axis(&self.forward_input_axis, &input);
 
 		let dir = Vector3::new(x, y, z);
 
-		for (transform, _) in (&mut transform, &tag).join() {
+		for (transform, _) in (&mut transform, &arc_cam).join() {
 			transform.move_local(dir, time.delta_seconds() * self.speed);
 		}
 	}
